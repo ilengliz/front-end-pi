@@ -1,0 +1,178 @@
+<app-card [classHeader]="true">
+  <table
+    id="dtBasicExample"
+    class="table table-striped table-bordered table-sm"
+    cellspacing="0"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th>Picture</th>
+        <th class="col">Fistname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Job Post</th>
+        <th>Projects</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>
+          <img
+            class="img-radius"
+            style="height:40px;width:40px"
+            src="{{ user.profilPic }}"
+          />
+        </td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.jobpost }}</td>
+        <td>
+          <button
+            class="btn btn-outline-secondary waves-effect waves-effect"
+            (click)="modalLarge.show(user.projects)"
+            (click)="intializeProjects(i)"
+          >
+            <i class="fa fa-eye fa-lg"></i>
+          </button>
+          <app-modal-basic #modalLarge [dialogClass]="'modal-lg'">
+            <div class="app-modal-header">
+              <h3 class="modal-title">All Projects</h3>
+              <button
+                type="button"
+                class="close basic-close"
+                (click)="modalLarge.hide()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="app-modal-body">
+              <ul class="basic-list list-group">
+                <li
+                  *ngFor="let project of user.projects; let j = index"
+                  class="list-group-item-light"
+                >
+                  <button
+                    *ngIf="editMode[j]"
+                    style="width:2px;"
+                    (click)="openSuccessCancelSwal2(i, j)"
+                    class="float-right  btn btn-danger btn-outline-danger"
+                  >
+                    <i class=" fa fas fa-times-circle fa-lg"></i>
+                  </button>
+                  <button
+                    *ngIf="editMode[j]"
+                    style="width:2px;"
+                    class="float-right btn btn-outline-default waves-effect waves-effect"
+                    (click)="changeMode(j)"
+                  >
+                    <i
+                      class="center fa fa-edit fa-lg"
+                      (click)="modalLarge.show(user.projects)"
+                    ></i>
+                  </button>
+                  <div *ngIf="editMode[j]">
+                    <h5>{{ project.name }}</h5>
+                    <p>Member as "role".</p>
+                  </div>
+
+                  <form #editUserProject="ngForm">
+                    <div *ngIf="!editMode[j]">
+                      <label>Edit project name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="project.name"
+                        name="projectName"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                      />
+                      <br />
+                      <label>Edit role</label>
+                      <div class="form-radio">
+                        <div class="group-add-on ">
+                          <div class="radio radiofill radio-inline">
+                            <label>
+                              <input
+                                ngModel
+                                type="radio"
+                                name="role"
+                                value="collaborator"
+                              /><i class="helper"></i> Collaborator
+                            </label>
+                          </div>
+                          <div class="radio radiofill radio-inline">
+                            <label>
+                              <input
+                                ngModel
+                                type="radio"
+                                name="role"
+                                value="teamLeader"
+                                checked
+                              /><i class="helper"></i>
+                              TeamLeader
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      *ngIf="!editMode[j]"
+                      style="width:2px;"
+                      class="float-right btn btn-outline-default waves-effect waves-effect"
+                      (click)="onEditUserProject(editUserProject, j)"
+                    >
+                      <i
+                        class="center fa fa-save fa-lg"
+                        (click)="modalLarge.show(user.projects)"
+                      ></i>
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+            <div class="app-modal-footer">
+              <button class="float-right btn btn-success btn-outline-success">
+                <i class="icofont icofont-plus"></i>Affect new project
+              </button>
+              <button
+                class="float-right btn btn-success btn-outline-success"
+                (click)="modalLarge.hide()"
+              >
+                Cancel
+              </button>
+            </div>
+          </app-modal-basic>
+        </td>
+        <td align="center">
+          <button
+            (click)="openSuccessCancelSwal(user.email, user.firstname)"
+            class="btn btn-danger btn-outline-danger"
+          >
+            <i class="fa fa-trash fa-lg"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Picture</th>
+        <th class="col">Fistname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Job Post</th>
+        <th>Projects</th>
+        <th>Actions</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <br />
+
+  <br />
+  <br />
+</app-card>

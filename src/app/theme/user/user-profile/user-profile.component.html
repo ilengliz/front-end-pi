@@ -1,0 +1,392 @@
+<div class="page-body">
+  <!--profile cover start-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="cover-profile">
+        <div class="profile-bg-img">
+          <img
+            class="profile-bg-img img-fluid"
+                style="height:120px"
+
+            src="assets/images/user-profile/bg-img1.jpg"
+            alt="bg-img"
+          />
+          <div class="card-block user-info">
+            <div class="col-md-12">
+              <div class="media-left">
+                <a href="javascript:" class="profile-image">
+                  <img
+                    class="user-img img-radius"
+                    [src]="src"
+                    style="width:100px;height:100px"
+                    alt="user-img"
+                  />
+                </a>
+              </div>
+              <div class="media-body row">
+                <div class="col-lg-12">
+                  <div class="user-title">
+                    <h2>{{firstname}} {{lastname}}</h2>
+                    <span class="text-white">{{jobpost}}</span>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--profile cover end-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-tabs md-card-tabs">
+        <ngb-tabset>
+          <ngb-tab title="Personal Info">
+            <ng-template ngbTabContent>
+              <div [@fadeInOutTranslate] class="m-t-15">
+                <!-- personal card start -->
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-header-text">About Me</h5>
+                    <button
+                      id="edit-btn"
+                      type="button"
+                      class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                      (click)="toggleEditProfile()"
+                    >
+                      <i class="icofont {{ editProfileIcon }}"></i>
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <div class="view-info" *ngIf="editProfile">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="general-info">
+                            <div class="row">
+                              <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                  <table class="table m-0">
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">First Name</th>
+                                        <td>{{ firstname }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Last Name</th>
+                                        <td>{{ lastname }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Email</th>
+                                        <td>
+                                          <a href="javascript:;">{{ email }}</a>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Gender</th>
+                                        <td>{{gender}}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Password</th>
+                                        <td>*******</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                              <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">Mobile Number</th>
+                                        <td>{{ phoneNum }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Job Post</th>
+                                        <td>{{ jobpost }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Projects</th>
+                                        <td>
+                                          <ul class="list-group-flush">
+                                            <li
+                                              *ngFor="let project of projects"
+                                              class="list-group-item"
+                                            >
+                                              {{ project.name }}
+                                            </li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                            </div>
+                            <!-- end of row -->
+                          </div>
+                          <!-- end of general info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                      <!-- end of row -->
+                    </div>
+                    <!-- end of view-info -->
+                    <div class="edit-info" *ngIf="!editProfile">
+                        <form #editUser = "ngForm">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="general-info">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <div class="table-responsive">
+                                  <table class="table">
+                                    <tbody>
+
+                                      <tr>
+                                        <td>
+                                          <div class="input-group">
+                                            <span class="input-group-prepend"
+                                              ><label class="input-group-text">
+                                                <i
+                                                  class="icofont icofont-user"
+                                                ></i></label
+                                            ></span>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              placeholder="First Name"
+                                                name="firstname"
+                                             [(ngModel)]="firstname"
+                                            />
+
+                                            <span class="input-group-prepend"
+                                              ><label class="input-group-text">
+                                                <i
+                                                  class="icofont icofont-user"
+                                                ></i></label
+                                            ></span>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              placeholder="Last Name"
+                                              [(ngModel)]="lastname"
+                                              name="lastname"
+                                            />
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <div class="input-group">
+                                            <span class="input-group-prepend">
+                                              <label class="input-group-text"
+                                                >@</label
+                                              >
+                                            </span>
+                                            <input
+                                              type="email"
+                                              class="form-control"
+                                              [(ngModel)]="email"
+                                              name="email"
+                                            />
+                                          </div>
+                                        </td>
+                                      </tr>
+
+
+
+                                      <tr>
+                                          <td>
+                                            <div class="input-group">
+                                              <span class="input-group-prepend"
+                                                ><label class="input-group-text"
+                                                  ><i
+                                                    class="icofont icofont-mobile-phone"
+                                                  ></i></label
+                                              ></span>
+                                              <input
+                                                type="number"
+                                                class="form-control"
+                                                [(ngModel)]="phoneNum"
+                                                placeholder="Mobile Number"
+                                                name="phoneNum"
+                                              />
+                                            </div>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-md-6 -->
+                              <div class="col-md-6">
+                                <div class="table-responsive">
+                                  <table class="table">
+                                    <tbody>
+
+                                      <tr>
+                                        <td>
+                                          <div class="input-group">
+                                            <span class="input-group-prepend">
+                                              <label class="input-group-text"
+                                                ><i
+                                                  class="icofont icofont-bag-alt"
+                                                ></i
+                                              ></label>
+                                            </span>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              [(ngModel)]="jobpost"
+                                              name="jobpost"
+                                              />
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <div class="custom-file">
+                                              <input
+                                                type="file"
+                                                class="custom-file-input"
+                                                id="customFile"
+                                                name="profilPic"
+                                                (change)="onFileSelected($event)"
+                                              />
+                                              <label
+                                                class="custom-file-label"
+                                                for="customFile"
+                                                >Choose profile picture</label
+                                              >
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      <tr>
+                                          <td>
+                                            <div class="form-radio">
+                                              <div class="group-add-on">
+                                                <div
+                                                  class="radio radiofill radio-inline"
+                                                >
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      name="gender"
+                                                      value="male"
+                                                    /><i class="helper"></i> Male
+                                                  </label>
+                                                </div>
+                                                <div
+                                                  class="radio radiofill radio-inline"
+                                                >
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      name="gender"
+                                                      value="female"
+                                                      checked
+                                                    /><i class="helper"></i>
+                                                    Female
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                              <button (click)="modalLarge.show()"  id='editpwd' class="btn btn-primary btn-outline-primary btn-block waves-effect md-trigger" >
+                                                  <i class="icofont icofont-ui-edit"></i>Change password
+                                                </button>
+                                          </td>
+                                        </tr>
+
+                                         <!-- modal large-->
+          <app-modal-basic #modalLarge [dialogClass]="'modal-md'">
+            <div class="app-modal-header">
+              <h4 class="modal-title">Change Password</h4>
+              <button type="button" class="close basic-close" (click)="modalLarge.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="app-modal-body">
+                <form #editpass="ngForm">
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Old password</label>
+                    <div class="col-sm-8">
+                    <input type="password" class="form-control form-control-primary" ngModel name="oldpassword" >
+                  </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">New password</label>
+                      <div class="col-sm-8">
+                      <input type="password"  name="newPassword" ngModel class="form-control form-control-primary" >
+                    </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Confirm new password</label>
+                        <div class="col-sm-8">
+                        <input type="password" name="confirmNewPassword" ngModel class="form-control form-control-primary" >
+                      </div>
+                      </div>
+                    </form>
+            </div>
+
+            <div class="app-modal-footer">
+              <button type="button" class="btn btn-default waves-effect" (click)="modalLarge.hide()">Cancel</button>
+              &nbsp;
+              <button type="button" (click)="onEditPassword(editpass)" class="btn btn-primary waves-effect waves-light ">Save changes</button>
+            </div>
+          </app-modal-basic>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                            </div>
+                            <!-- end of row -->
+                            <div class="text-center">
+                              <a
+                                href="javascript:;"
+                                class="btn btn-primary waves-effect waves-light m-r-20"
+                                (click)="openPromptSwal(editUser)" >Save</a
+                              >
+                              <a
+                                href="javascript:;"
+                                (click)="toggleEditProfile()"
+                                >Cancel</a
+                              >
+                            </div>
+                          </div>
+                          <!-- end of edit info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                    </form>
+
+                      <!-- end of row -->
+                    </div>
+                    <!-- end of edit-info -->
+                  </div>
+                  <!-- end of card-body -->
+                </div>
+
+                <!-- personal card end-->
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+

@@ -1,0 +1,124 @@
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="signup-card card-block auth-body mr-auto ml-auto">
+            <form #declarativeForm="ngForm" class="md-float-material" (ngSubmit)="onSignUp(declarativeForm)">
+
+            <div class="text-center">
+              <img src="assets/images/logo.png" alt="">
+            </div>
+            <div class="auth-box">
+              <div class="row">
+                <div class="col">
+                  <h3 class="text-center txt-primary">Sign up. It is fast and easy.</h3>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-md-6"><div class="input-group">
+                    <input type="text" class="form-control"   ngModel name="firstname" #firstname placeholder="Your First Name">
+
+                    <span class="md-line"></span>
+                  </div></div>
+                  <div class="col-md-6"> <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Your Last Name" #lastname ngModel name="lastname" >
+                      <span class="md-line"></span>
+                    </div> </div>
+                 </div>
+<div class="row">
+  <div class="col-md-6"><div class="input-group">
+      <input type="email" class="form-control" placeholder="Your Email Address"  ngModel #email name="email" required>
+      <span class="md-line"></span>
+    </div></div>
+    <div class="col-md-6"><div class="input-group">
+      <input type="number" class="form-control" placeholder="CIN" #cin ngModel name="cin">
+      <span class="md-line"></span>
+    </div></div>
+
+</div>
+<div class="row">
+  <div class="col-md-6"> <div class="input-group">
+      <input type="text" class="form-control" placeholder="Your Job Post" #jobPost ngModel name="jobPost">
+      <span class="md-line"></span>
+    </div></div>
+    <div class="col-md-6"><div class="input-group">
+        <input type="number" class="form-control" placeholder="Mobile Number" #mobileNumber ngModel name="mobileNumber">
+        <span class="md-line"></span>
+      </div></div>
+
+
+</div>
+<div class="row">
+  <div class="col-md-6"><div class="custom-file">
+      <input type="file" class="custom-file-input" (change)="onFileSelected($event)"  id="customFile" #profilePicture  ngModel name="profilePicture">
+      <label class="custom-file-label" for="customFile">Your profile picture</label>
+  </div></div>
+  <div class="col-md-6">
+      <div class="form-radio left">
+            <div class="radio radio-inline" >
+              <label>
+                <input type="radio"  value="male" name="gender"  ngModel>
+                <i class="helper"></i>Male
+              </label>
+            </div>
+            <div class="radio radio-inline">
+              <label>
+                <input type="radio" value="female"    name="gender" ngModel>
+                <i class="helper"></i>Female
+              </label>
+            </div>
+
+
+        </div></div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-6">  <div class="input-group">
+      <input type="password" class="form-control"  ngModel name="password" #password  placeholder="Choose Password">
+      <span class="md-line"></span>
+    </div></div>
+    <div class="col-md-6"><div class="input-group">
+        <input type="password" class="form-control" ngModel name="confirmPassword" #confirmPassword placeholder="Confirm Password">
+        <span class="md-line"></span>
+      </div>
+</div>
+</div>
+<div class="center">
+  <re-captcha ngModel name="captcha" required  ></re-captcha>
+
+</div>
+
+
+              <div class="row m-t-30">
+                <div class="col-md-12">
+                  <button type="submit"  [disabled]="!declarativeForm.valid" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign up now</button>
+
+                </div>
+              </div>
+
+
+              <div class="row">
+                  <div class="col-md-10">
+                  </div>
+                  <div class="col-md-2">
+                    <img src="assets/images/logo.png" alt="logo.png" style="width:50px">
+                  </div>
+                </div>
+              <hr/>
+
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
+</section>
