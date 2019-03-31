@@ -24,6 +24,10 @@ const routes: Routes = [
       {
         path: 'lock-screen',
         loadChildren: './lock-screen/lock-screen.module#LockScreenModule'
+      },
+      {
+        path: 'recoverpass',
+        loadChildren: './recoverpass/recoverpass.module#RecoverpassModule'
       }
     ]
   }

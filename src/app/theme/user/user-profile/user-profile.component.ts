@@ -68,6 +68,7 @@ src: string;
 file = null;
 
 email = localStorage.getItem('email');
+  qrcode: string;
   constructor(private userService: UserService) {
     this.fetchContactData(data => {
       this.rowsContact = data;
@@ -89,6 +90,7 @@ email = localStorage.getItem('email');
         this.projects = data.projects;
         this.gender = data.sex;
         this.phoneNum = data.phoneNum;
+        this.qrcode = data.qrcode ;
         console.log(this.profilePic);
       },
       err => console.log(err)

@@ -1,18 +1,14 @@
+import { RecoverpassComponent } from './recoverpass.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ProjectsComponent} from './projects.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProjectsComponent,
+    component: RecoverpassComponent,
     data: {
-      title: 'Projects',
-      icon: 'ti-layout-sidebar-left',
-      caption: '',
-      status: true
-    },
-
+      title: 'recover'
+    }
   }
 ];
 
@@ -20,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProjectsRoutingModule { }
+export class RecoverpassRoutingModule { }

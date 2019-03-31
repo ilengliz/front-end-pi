@@ -18,6 +18,7 @@ const routes: Routes = [
         redirectTo: 'dashboard/default',
         pathMatch: 'full'
       },
+
       {
         path: 'user',
         loadChildren: './theme/user/user.module#UserModule'
@@ -39,8 +40,8 @@ const routes: Routes = [
         loadChildren: './theme/instances/instances.module#InstancesModule'
       },
       {
-        path: 'projects',
-        loadChildren: './theme/projects/projects.module#ProjectsModule'
+        path: 'project',
+        loadChildren: './theme/projects/project.module#ProjectModule'
       },
       {
         path: 'teams',

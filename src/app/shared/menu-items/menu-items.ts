@@ -43,11 +43,20 @@ const MENUITEMS = [
         },
 
         {
-          state: 'projects',
+          state: 'project',
           short_label: 'p',
           name: 'Projects',
-          type: 'link',
-          icon: 'ti-clipboard'
+          type: 'sub',
+          icon: 'ti-clipboard',
+          children: [
+            {
+              state: 'projects',
+              name: 'All Projects'
+            },
+            {
+              state: 'newProject',
+              name: 'Add project'
+            }]
         },
         {
           state: 'teams',

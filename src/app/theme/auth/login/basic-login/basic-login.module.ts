@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BasicLoginComponent } from './basic-login.component';
 import {BasicLoginRoutingModule} from './basic-login-routing.module';
 import {SharedModule} from '../../../../shared/shared.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
@@ -15,6 +15,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     FormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    ReactiveFormsModule
   ],
   declarations: [BasicLoginComponent],
   providers: [{

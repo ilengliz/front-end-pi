@@ -14,10 +14,13 @@ export class UserService {
   private confirmationEditUrl = 'http://localhost/pfe/public/api/verifpass';
   private removeUserFromProjectUrl = 'http://localhost/pfe/public/api/delete_user_from_project';
   userEmail = '';
+  myUserRole: string;
+  collaborator = 'collaborator';
+  teamLeader = 'teamLeader';
   verifPass: boolean;
   refereshedData: User [];
   constructor(private http: HttpClient) { }
-  getUsers() {
+getUsers() {
 return this.http.get<User []>(this.getUsersUrl);
   }
 
@@ -105,7 +108,7 @@ editConfirmation(password) {
   }, {headers: new HttpHeaders().set('Content-Type', 'application/json'),
   responseType: 'text' });
   }
-  deleteUserFromProject(projectId, email) {
+deleteUserFromProject(projectId, email) {
 this.http.post(this.removeUserFromProjectUrl, {
   'project_id': projectId,
   'email': email
@@ -113,5 +116,12 @@ this.http.post(this.removeUserFromProjectUrl, {
 console.log(data);
 }, error => console.error('error', error)
 );
+  }
+  getRole() {
+this.getUserInformation().subscribe(data => {
+console.log(data.roles[0]);
+this.myUserRole = data.roles[0];
+});
+return this.myUserRole;
   }
 }

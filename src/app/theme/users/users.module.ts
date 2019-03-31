@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 import {  UsersComponent } from './users.component';
 import { UsersRoutingModule} from './users-routing.module';
 import {SharedModule} from '../../shared/shared.module';
+import {SelectModule} from 'ng-select';
 // tslint:disable-next-line:import-spacing
 import { FormsModule }   from '@angular/forms';
+// import { SelectControlValueAccessor } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     UsersRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    SelectModule,
+   // SelectControlValueAccessor
   ],
   declarations: [UsersComponent ]
 })

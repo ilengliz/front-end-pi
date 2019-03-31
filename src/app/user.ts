@@ -12,6 +12,8 @@ password: string;
   phoneNum: string;
   jobpost: string;
   profilPic: string;
+  qrcode: string;
+  roles: string[];
 
 
 }

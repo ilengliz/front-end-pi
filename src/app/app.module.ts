@@ -1,3 +1,4 @@
+import { ProjectModule } from './theme/projects/project.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './auth/auth.guard';
@@ -21,7 +22,7 @@ import {SharedModule} from './shared/shared.module';
 import {MenuItems} from './shared/menu-items/menu-items';
 import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ProjectsModule } from './theme/projects/projects.module';
+import { ProjectsModule } from './theme/projects/projects/projects.module';
 import { UsersModule } from './theme/users/users.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 // import { httpInterceptorProviders } from './auth/auth-interceptor';
@@ -49,7 +50,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     TeamsModule,
     DataTableModule,
     UsersModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ProjectModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [MenuItems, AuthService, SignUpService, AuthGuard, {
