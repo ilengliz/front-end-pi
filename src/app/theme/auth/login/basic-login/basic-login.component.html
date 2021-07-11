@@ -17,33 +17,33 @@
                     <h3 class="text-left txt-primary">Sign In</h3>
                   </div>
                 </div>
-               <strong> <h2 class="red-text center" *ngIf="isLoginFailed">Incorrect email or password</h2></strong>
-                <hr/>
+                <div *ngIf='isLoginFailed' class="alert alert-danger icons-alert">
+                    <button type="button" class="close" appRemoveAlert>
+                      <i class="icofont icofont-close-line-circled"></i>
+                    </button>
+                    <p><strong>Something Went Wrong !</strong> </p>
+                    <p>Please try again</p>
+                  </div>
+                  <hr/>
                 <div class="col-md-16">
                   <input type="email" class="form-control" [ngClass]="{'is-invalid': loginForm.get('email').invalid && loginForm.get('email').touched}" placeholder="Your Email Address"  formControlName="email" name="email" required><br>
                   <span class="md-line text-danger" *ngIf="loginForm.get('email').invalid && loginForm.get('email').value !== '' && loginForm.get('email').touched"> Invalid email</span>
 
                 </div>
-                <div class="input-group">
+                <div class="col-md-16">
                   <input type="password" class="form-control" required   [ngClass]="{'is-invalid': loginForm.get('password').errors && loginForm.get('password').touched}" formControlName="password" name="password"  placeholder="Choose Password">
                   <span class="md-line"></span>
                 </div>
-                <div class="row m-t-25 text-left">
+                <div class="row  text-left">
                   <div class="col-12">
-                    <div class="checkbox-fade fade-in-primary d-">
-                      <label>
-                        <input type="checkbox" value="">
-                        <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
-                        <span class="text-inverse">Remember me</span>
-                      </label>
-                    </div>
                     <div class="forgot-phone text-right f-right">
                       <a [routerLink]="['/auth/forgot']" class="text-right f-w-600 text-inverse"> Forgot Password?</a>
                     </div>
                   </div>
                 </div>
-                <br>
-                <re-captcha formControlName="recaptcha" style="margin:0 auto;" mode="indeterminate"></re-captcha>
+                <div style="text-align: center; margin-top: 10px">
+                  <re-captcha formControlName="recaptcha" style="margin:0 auto; display: inline-block" mode="indeterminate"></re-captcha>
+                </div>
                 <div class="row m-t-30">
                   <div class="col-md-12">
                     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"   >Sign in</button>
@@ -62,10 +62,6 @@
                     <p class="text-inverse text-left"><b>Please Sign Up
                  <i>   <a [routerLink]="['/auth/registration/simple']" class="text-right f-w-600 text-inverse"> here</a></i>
                   </b> </p>
-                  </div>
-
-                  <div class="col-md-2">
-                    <img src="assets/images/logo.png" alt="logo.png" style="width: 50px;">
                   </div>
                 </div>
 

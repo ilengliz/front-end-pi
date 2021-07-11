@@ -22,8 +22,8 @@ export class ProjectService {
   getProjects() {
  return this.http.get<Project []>(this.projectsUrl);
   }
-  getProjectCollaborators( projectId) {
-    return this.http.post(this.projectCollabortsUrl, {
+  getProjectCollaborators ( projectId) {
+    return this.http.post <Project>(this.projectCollabortsUrl, {
       'project_id': projectId
     });
   }
@@ -36,20 +36,13 @@ export class ProjectService {
     }
   }
 addProject (projectName, projectBudget, extraBudget, teamleader ) {
-  this.http.post(this.addProjectUrl, {
+  return this.http.post(this.addProjectUrl, {
     'teamleader': teamleader,
     'name': projectName,
     'budget': projectBudget,
     'extra_budget': extraBudget,
-    'remaining_budget': 0
-  }).subscribe(data => {
-    console.log(data);
-    this.router.navigateByUrl('/project/projects');
-
-  },
-  error =>
-  console.log(error)
-  );
+    'remaining_budget': projectBudget
+  });
 }
 addUserToProject(id, email) {
 return this.http.post(this.addUserToProjectUrl, {
@@ -60,7 +53,8 @@ return this.http.post(this.addUserToProjectUrl, {
 deleteProject(project_id) {
 
 this.http.post(this.deleteProjectUrl, {
-  'project_id': project_id
+  'project_id': project_id,
+  'email': localStorage.getItem('email')
  }).subscribe(data => console.log('project deleted', data),
             error => console.log(error));
 }
@@ -69,9 +63,9 @@ editProjet(id, projectName, projectBudget, extrabudget, teamleader) {
   this.http.post(this.editProjectUrl, {
     'teamleader': teamleader,
     'name': projectName,
-    'budget': projectBudget as string,
-    'extra_budget': extrabudget as string,
-    'id': id as string
+    'budget': projectBudget ,
+    'extra_budget': extrabudget,
+    'id': id
   }).subscribe(data => {
     console.log('edit request', data);
   }, error => console.log(error)

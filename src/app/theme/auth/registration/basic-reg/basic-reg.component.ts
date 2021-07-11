@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SignUpService } from 'src/app/services/sign-up.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 })
 export class BasicRegComponent implements OnInit {
 
-
+  passSent = false;
 
 mygender: String = '';
 file = null;
@@ -22,33 +23,25 @@ profilePicture = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAADhCAMAAADm
 classDanger = false;
 validatingForm: FormGroup;
 
-  constructor(private signUpService: SignUpService)  {
+  constructor(private signUpService: SignUpService, private router: Router)  {
 
    }
   ngOnInit() {
     const firstName = new FormControl('', Validators.required);
     const lastName = new FormControl('', Validators.required);
-    const cin = new FormControl('');
     const jobPost = new FormControl('', Validators.required);
     const mobileNumber = new FormControl('', Validators.required);
     const customFile = new FormControl('');
-    const email = new FormControl('', [Validators.required, Validators.email]);
-    const password = new FormControl('', Validators.required);
-    const confirmPassword = new FormControl('', [Validators.required, CustomValidators.equalTo(password)]);
-    const gender = new FormControl('', Validators.required);
+    const email = new FormControl('', [Validators.required]);
     const recaptcha = new FormControl(null, Validators.required);
 
     this.validatingForm = new FormGroup({
       firstName,
       lastName,
-      cin,
       jobPost,
       mobileNumber,
       customFile,
       email,
-      password,
-      confirmPassword,
-      gender,
       recaptcha
     });
     console.log(this.validatingForm);
@@ -73,9 +66,12 @@ onFileSelected(event) {
 
   onSignUp(form: NgForm) {
     this.signUpService.signUp (this.validatingForm.get('firstName').value, this.validatingForm.get('lastName').value,
-    this.validatingForm.get('email').value, this.validatingForm.get('cin').value, this.validatingForm.get('jobPost').value,
-     this.validatingForm.get('mobileNumber').value, this.profilePicture, this.validatingForm.get('gender').value,
-    this.validatingForm.get('password').value);
+    this.validatingForm.get('email').value + '@tritux.com' , '', this.validatingForm.get('jobPost').value,
+     this.validatingForm.get('mobileNumber').value, this.profilePicture, ''
+  ).subscribe(data => { console.log(data);
+    this.passSent = true ;
+    this.router.navigate(['/auth/login/simple']);
+  }, error => { this.passSent = false ; });
   }
 
 }

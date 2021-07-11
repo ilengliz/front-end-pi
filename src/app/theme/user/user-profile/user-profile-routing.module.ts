@@ -6,12 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: UserProfileComponent,
-    data: {
-      title: 'User Profile',
-      icon: 'ti-user',
-      caption: '',
-      status: true
-    }
   }
 ];
 

@@ -4,7 +4,7 @@ import { AdvanceElementsComponent } from './advance-elements.component';
 import {AdvanceElementsRoutingModule} from './advance-elements-routing.module';
 import {SharedModule} from '../../../shared/shared.module';
 import {UiSwitchModule} from 'ng2-ui-switch';
-import {TagInputModule} from 'ngx-chips';
+// import {TagInputModule} from 'ngx-chips';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
@@ -13,7 +13,7 @@ import {FormsModule} from '@angular/forms';
     AdvanceElementsRoutingModule,
     SharedModule,
     UiSwitchModule,
-    TagInputModule,
+   // TagInputModule,
     FormsModule
   ],
   declarations: [AdvanceElementsComponent]

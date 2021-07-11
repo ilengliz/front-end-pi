@@ -117,12 +117,13 @@ export class AdminComponent implements OnInit {
   public itemBorderStyle: string;
   public subItemBorder: boolean;
   public itemBorder: boolean;
-  firstname: string;
+  isAdmin = true;
+  firstname = '';
   lastname: string;
   profilePic: string;
   public config: any;
 
-  constructor(public menuItems: MenuItems, private userService: UserService) {
+  constructor(public menuItems: MenuItems, public userService: UserService) {
     this.userService.getUserInformation().subscribe(data => {
       this.firstname = data.firstname;
       this.lastname = data.lastname;
@@ -191,12 +192,31 @@ export class AdminComponent implements OnInit {
     // side-bar image
     this.setLayoutType('img');
 
-  }
 
+    this.userService.getUserInformation().subscribe(data => {
+
+     /* console.log('service0', data.roles[0]);
+      if (data.roles[0] === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+
+      } else {
+        this.isAdmin = false;
+      }*/
+  });
+
+
+
+  }
   ngOnInit() {
     this.setBackgroundPattern('pattern1');
     /*document.querySelector('body').classList.remove('dark');*/
   }
+  isUser() {
+
+
+}
+
+
   logout() {
     localStorage.removeItem ('userToken');
     localStorage.removeItem('email');

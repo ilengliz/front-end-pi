@@ -33,37 +33,28 @@ export interface Menu {
 const MENUITEMS = [
   { label : '',
     main: [
-
-        {
+      {
+        state: 'nutritionnistes',
+        short_label: 'S',
+        name: 'Nutritioniste',
+        type: 'link',
+        icon: 'ti-layout-sidebar-left'
+      }, 
+      
+      {
           state: 'instances',
-          short_label: 'A',
+          short_label: 'p',
           name: 'Instances',
           type: 'link',
-          icon: 'ti-list'
+          icon: 'ti-google'
         },
-
+      
         {
-          state: 'project',
+          state: 'projects',
           short_label: 'p',
           name: 'Projects',
-          type: 'sub',
-          icon: 'ti-clipboard',
-          children: [
-            {
-              state: 'projects',
-              name: 'All Projects'
-            },
-            {
-              state: 'newProject',
-              name: 'Add project'
-            }]
-        },
-        {
-          state: 'teams',
-          short_label: 't',
-          name: 'Teams',
           type: 'link',
-          icon: 'fa fa-group'
+          icon: 'ti-clipboard'
         },
       {
         state: 'users',
@@ -73,25 +64,18 @@ const MENUITEMS = [
         icon: 'ti-user'
       },
       {
-        state: 'schedules',
+        state: 'log',
+        short_label: 's',
+        name: 'Logs',
+        type: 'link',
+        icon: 'ti-write'
+      },
+      {
+        state: 'schedule',
         short_label: 's',
         name: 'Schedules',
         type: 'link',
-        icon: 'ti-calendar'
-      },
-      {
-        state: 'reports',
-        short_label: 'r',
-        name: 'Reports',
-        type: 'link',
-        icon: 'ti-stats-up'
-      },
-      {
-        state: 'notifications',
-        short_label: 'n',
-        name: 'Notifications',
-        type: 'link',
-        icon: 'ti-bell'
+        icon: 'ti-clipboard'
       }
     ]
   },

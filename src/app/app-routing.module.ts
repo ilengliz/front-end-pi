@@ -1,24 +1,32 @@
-import { AuthGuard } from './auth/auth.guard';
-import { SimplePageRoutingModule } from './theme/simple-page/simple-page-routing.module';
-import { LoginRoutingModule } from './theme/auth/login/login-routing.module';
-import { AuthRoutingModule } from './theme/auth/auth-routing.module';
-import { UserRoutingModule } from './theme/user/user-routing.module';
+//import { AuthGuard } from './auth/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './layout/admin/admin.component';
 import {AuthComponent} from './layout/auth/auth.component';
+import { NutritionnisteComponent } from './theme/nutritionniste/nutritionniste.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     children: [
-      {
+     {
         path: '',
-        redirectTo: 'dashboard/default',
+        redirectTo: 'projects',
         pathMatch: 'full'
       },
-
+      {
+        path: 'nutritionnistes',
+        component: NutritionnisteComponent
+      },
+      {
+      path: '',
+      loadChildren: './theme/instance/instance.module#InstanceModule'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
+      },
       {
         path: 'user',
         loadChildren: './theme/user/user.module#UserModule'
@@ -37,24 +45,44 @@ const routes: Routes = [
       },
       {
         path: 'instances',
-        loadChildren: './theme/instances/instances.module#InstancesModule'
+        loadChildren: './theme/instance/instance.module#InstanceModule'
       },
       {
-        path: 'project',
-        loadChildren: './theme/projects/project.module#ProjectModule'
+        path: 'newProject',
+        loadChildren: './theme/new-project/new-project.module#NewProjectModule'
       },
       {
-        path: 'teams',
-        loadChildren: './theme/teams/teams.module#TeamsModule'
+        path: 'newSchedule',
+        loadChildren: './theme/new-schedule/new-schedule.module#NewScheduleModule'
+      },
+      {
+        path: 'newInstance',
+        loadChildren: './theme/new-instance/new-instance.module#NewInstanceModule'
+      },
+      {
+        path: 'log',
+        loadChildren: './theme/log/log.module#LogModule'
       },
       {
         path: 'users',
         loadChildren: './theme/users/users.module#UsersModule'
+      },
+      {
+        path: 'projects',
+        loadChildren: './theme/projects/projects.module#ProjectsModule'
+      },
+      {
+        path: 'schedule',
+        loadChildren: './theme/schedules/schedules.module#SchedulesModule'
+      },
+      {
+        path: 'profile/:email',
+        loadChildren: './theme/user-profile/user-profile.module#UserProfileModule'
       }
     ],
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
     },
-    {
+  /* {
       path: '',
       component: AuthComponent,
       children: [
@@ -63,7 +91,7 @@ const routes: Routes = [
           loadChildren: './theme/auth/auth.module#AuthModule'
         }
       ]
-    },
+    },*/
 
 ];
 

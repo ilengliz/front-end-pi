@@ -2,114 +2,141 @@
   <!-- Container-fluid starts -->
   <div class="container-fluid">
     <div class="row">
-
       <div class="col-sm-12">
         <!-- Authentication card start -->
         <div class="signup-card card-block auth-body mr-auto ml-auto">
-            <form  [formGroup]="validatingForm"  class="md-float-material" (ngSubmit)="onSignUp(validatingForm)">
-
+          <form
+            [formGroup]="validatingForm"
+            class="md-float-material"
+            (ngSubmit)="onSignUp(validatingForm)"
+          >
             <div class="text-center">
-              <img src="assets/images/logo.png" alt="">
+              <img src="assets/images/logo.png" alt="" />
             </div>
             <div class="auth-box">
               <div class="row">
                 <div class="col">
-                  <h3 class="text-center txt-primary">Sign up. It is fast and easy.</h3>
+                  <h3 class="text-center txt-primary">
+                    Sign up. It is fast and easy.
+                  </h3>
                 </div>
               </div>
-              <hr/>
+              <p class="text-inverse b-b-default text-right">Back to <a [routerLink]="['/auth/login/simple']">Login.</a></p>
               <div class="row">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" formControlName="firstName" [ngClass]="{'is-invalid': validatingForm.get('firstName').errors && validatingForm.get('firstName').touched}" required  name="firstName" placeholder="Your First Name">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="firstName"
+                    [ngClass]="{
+                      'is-invalid':
+                        validatingForm.get('firstName').errors &&
+                        validatingForm.get('firstName').touched
+                    }"
+                    required
+                    name="firstName"
+                    placeholder=" First Name"
+                  />
 
+                  <span class="md-line"></span>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=" Last Name"
+                      formControlName="lastName"
+                      name="lastname"
+                    />
                     <span class="md-line"></span>
                   </div>
-                  <div class="col-md-6"> <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Your Last Name" formControlName="lastName" name="lastname" >
-                      <span class="md-line"></span>
-                    </div> </div>
-                 </div>
-<div class="row">
-  <div class="col-md-6">
-      <input type="email" class="form-control" [ngClass]="{'is-invalid': validatingForm.get('email').invalid && validatingForm.get('email').touched}" placeholder="Your Email Address"  formControlName="email" name="email" required>
-      <span class="md-line text-danger" *ngIf="validatingForm.get('email').invalid && validatingForm.get('email').value !== '' && validatingForm.get('email').touched"> Invalid email</span>
-    </div>
-    <div class="col-md-6"><div class="input-group">
-      <input type="number" class="form-control" placeholder="CIN" formControlName="cin" name="cin">
-      <span class="md-line"></span>
-    </div></div>
-
-</div>
-<div class="row">
-  <div class="col-md-6"> <div class="input-group">
-      <input type="text" class="form-control" placeholder="Your Job Post" formControlName="jobPost" name="jobPost">
-      <span class="md-line"></span>
-    </div></div>
-    <div class="col-md-6"><div class="input-group">
-        <input type="number" class="form-control" placeholder="Mobile Number" formControlName="mobileNumber" name="mobileNumber">
-        <span class="md-line"></span>
-      </div></div>
-
-
-</div>
-<div class="row">
-  <div class="col-md-6"><div class="custom-file">
-      <input type="file" class="custom-file-input" (change)="onFileSelected($event)"  id="customFile" formControlName="customFile" name="profilePicture">
-      <label class="custom-file-label" for="customFile">Your profile picture</label>
-  </div></div>
-  <div class="col-md-6">
-      <div class="form-radio left">
-            <div class="radio radio-inline" >
-              <label>
-                <input type="radio"  value="male" name="gender"  formControlName="gender">
-                <i class="helper"></i>Male
-              </label>
-            </div>
-            <div class="radio radio-inline">
-              <label>
-                <input type="radio" value="female"    name="gender" formControlName="gender">
-                <i class="helper"></i>Female
-              </label>
-            </div>
-
-
-        </div></div>
-</div>
-<br>
-<div class="row">
-  <div class="col-md-6">
-      <input type="password" class="form-control" required   [ngClass]="{'is-invalid': validatingForm.get('password').errors && validatingForm.get('password').touched}" formControlName="password" name="password"  placeholder="Choose Password">
-      <!-- <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-        Password is required
-      </div> -->
-      <span class="md-line"></span>
-    </div>
-    <br>
-    <div class="col-md-6">
-
-      <input type="password" compare="password"  [ngClass]="{'is-invalid': validatingForm.get('confirmPassword').errors && validatingForm.get('confirmPassword').touched}"  required  class="form-control" formControlName="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
-      <div class="messages text-danger" *ngIf="validatingForm.get('confirmPassword').errors?.equalTo && validatingForm.get('confirmPassword').touched">The passwords does not match</div>
-
-      <!-- <div class="text-danger" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
-          <div  class="col-form-label" *ngIf="confirmPassword.errors['required']">Password confirm is required</div>
-          <div  class="col-form-label"  *ngIf="confirmPassword.errors['compare']">Password confirm do not match</div>
-         </div> -->
-
-      <span class="md-line"></span>
-    </div>
-</div>
-<br>
-<re-captcha formControlName="recaptcha" style="margin:0 auto;" mode="indeterminate"></re-captcha>
-
-
-              <div class="row m-t-30">
-                <div class="col-md-12">
-                  <button type="submit"  [disabled]="validatingForm.invalid" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign up now</button>
-
                 </div>
               </div>
-               <hr/>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <input type="text" pattern="[^@]+" [ngClass]="{
+                          'is-invalid':
+                            validatingForm.get('email').invalid &&
+                            validatingForm.get('email').touched
+                        }"  formControlName="email"
+                        name="email" class="form-control" placeholder="Username" aria-label="Username"
+                          aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <span class="input-group-text" style="background-color:#e9ecef; color:#62686F;" id="basic-addon2">@tritux.com</span>
+                        </div>
+                      </div>
 
+                  <span
+                    class="md-line text-danger"
+                    *ngIf="
+                      validatingForm.get('email').invalid &&
+                      validatingForm.get('email').value !== '' &&
+                      validatingForm.get('email').touched
+                    "
+                  >
+                    Invalid Username</span
+                  >
+                </div>
+                <div class="col-md-6">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="custom-file-input"
+                      (change)="onFileSelected($event)"
+                      id="customFile"
+                      formControlName="customFile"
+                      name="profilePicture"
+                      placeholder=" profile picture"
+                    />
+                    <label style = 'margin-left:0px;' class="custom-file-label" for="customFile"
+                      >                     profile picture</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder=" Job Post"
+                      formControlName="jobPost"
+                      name="jobPost"
+                    />
+                    <span class="md-line"></span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Mobile Number"
+                      formControlName="mobileNumber"
+                      name="mobileNumber"
+                    />
+                    <span class="md-line"></span>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align: center; margin-top: 10px">
+                  <re-captcha formControlName="recaptcha" style="margin:0 auto; display: inline-block" mode="indeterminate"></re-captcha>
+                </div>
+              <div class="row m-t-30">
+                <div class="col-md-12">
+                  <button
+                    type="submit"
+                    [disabled]="validatingForm.invalid"
+                    class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                  >
+                    Sign up now
+                  </button>
+                </div>
+              </div>
+              <hr />
             </div>
           </form>
           <!-- end of form -->

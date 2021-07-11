@@ -1,14 +1,17 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../services/user.service';
-import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
-import set = Reflect.set;
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, ViewEncapsulation} from '@angular/core';
 import { User } from 'src/app/user';
 import swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
-// tslint:disable-next-line:import-spacing
-import { FormsModule }   from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/Project';
-
+import {
+  ToastData,
+  ToastOptions,
+  ToastyService,
+  ToastyConfig
+} from 'ng2-toasty';
 
 
 declare var $;
@@ -18,31 +21,40 @@ declare var $;
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss',
   '../../../assets/icon/icofont/css/icofont.scss'
-]
+],
+encapsulation: ViewEncapsulation.None
+
 })
 export class UsersComponent implements OnInit {
   @ViewChild('dataTable') table;
   dataTable: any;
   dtOption: any = {};
-users: User [];
+users: User [] = [];
 src: string;
 editMode: Array <boolean> = [] ;
-role: string;
-projects: Project [];
+role = '';
+projects: Project [] = [];
 allprojects: Project [] = [];
-userRole: string;
+userRole = '';
 isclicked = false;
 isAdmin = false;
 isTeamLeader = false;
 isUser = false;
 selectedOption = '-1';
-  constructor(private userService: UserService, private chRef: ChangeDetectorRef, private projectService: ProjectService) {
+  constructor(private userService: UserService,
+     private chRef: ChangeDetectorRef,
+     private projectService: ProjectService,
+     private route: ActivatedRoute,
+     private toastyConfig: ToastyConfig,
+     private toastyService: ToastyService,
+     private router:  Router) {
+      this.toastyConfig.theme = 'material';
+
     this.userService.getUsers().subscribe(data => {
-      console.log(data);
       this.users = data;
       this.chRef.detectChanges();
       // Now you can use jQuery DataTables :
-      const table: any = $('table');
+      const table: any = $('#dtBasicExample');
       this.dataTable = table.DataTable();
     }
     ,
@@ -51,12 +63,10 @@ selectedOption = '-1';
 $('.dataTables_length').addClass('bs-select');
 this.projectService.getProjects().subscribe(data => {
   this.projects = data ;
-  console.log('projects', this.projects);
 }, error =>
 console.log(error)
 
 );
-this.userRole = this.userService.getRole();
 
 if (this.userRole === 'ROLE_USER') {
   this.isUser = true;
@@ -65,6 +75,7 @@ if (this.userRole === 'ROLE_USER') {
 }
 
   }
+
 // for alert //
 openSuccessCancelSwal(email, firstname) {
   swal({
@@ -80,12 +91,23 @@ openSuccessCancelSwal(email, firstname) {
     cancelButtonClass: 'btn btn-danger mr-sm'
   }).then((result) => {
     if (result.value) {
-      this.onDeleteUser(email);
-      swal(
-        'Deleted!',
-        'Your user has been deleted.',
-        'success'
-      );
+      this.userService.deleteUser(email).subscribe(data => {
+        console.log(data);
+        const found = this.users.find(function(element) {
+          return element.email === email;
+        });
+        const index = this.users.indexOf(found);
+        swal(
+          'Deleted!',
+          'Your user has been deleted.',
+          'success'
+        );
+        this.users.splice(index, 1);
+      }, error => { console.log(error);
+        this.addToast('Something went wrong', 'Could not delete a Team leader ', 'error');
+      });
+
+
     } else if (result.dismiss) {
       swal(
         'Cancelled',
@@ -96,24 +118,22 @@ openSuccessCancelSwal(email, firstname) {
   });
 }
   ngOnInit(): void {
-    this.dtOption = {
-      'paging':   true,
-      'ordering': true,
-      'info':     true
-  };
-  this.dataTable = $(this.table.nativeElement);
-  this.dataTable.DataTable(this.dtOption);
 
   }
 
 
   onDeleteUser(email) {
-    this.userService.deleteUser(email);
-    const found = this.users.find(function(element) {
-      return element.email === email;
+    this.userService.deleteUser(email).subscribe(data => {
+      console.log(data);
+      const found = this.users.find(function(element) {
+        return element.email === email;
+      });
+      const index = this.users.indexOf(found);
+      this.users.splice(index, 1);
+    }, error => { console.log(error);
+      this.addToast('Something went wrong', 'Could not delete a Team leader ', 'error');
     });
-    const index = this.users.indexOf(found);
-    this.users.splice(index, 1);
+
   }
 
   getUserByEmail(email: string) {
@@ -121,6 +141,35 @@ openSuccessCancelSwal(email, firstname) {
       return element.email === email;
     });
     return found;
+  }
+  addToast(title, message, type) {
+    console.log('adding toast');
+    // Or create the instance of ToastOptions
+    const toastOptions: ToastOptions = {
+      title: title,
+      msg: message,
+      showClose: true,
+      timeout: 5000,
+      theme: 'material',
+      onAdd: (toast: ToastData) => {
+        console.log('Toast ' + toast.id + ' has been added!');
+      },
+      onRemove: function(toast: ToastData) {
+        console.log('Toast ' + toast.id + ' has been removed!');
+      }
+    };
+        switch (type) {
+      case 'default': this.toastyService.default(toastOptions); break;
+      case 'info': this.toastyService.info(toastOptions); break;
+      case 'success': this.toastyService.success(toastOptions); break;
+      case 'wait': this.toastyService.wait(toastOptions); break;
+      case 'error': this.toastyService.error(toastOptions); break;
+      case 'warning': this.toastyService.warning(toastOptions); break;
+    }
+
+
+
+
   }
 intializeProjects (i, userProjects) {
   console.log(userProjects);
@@ -131,7 +180,6 @@ intializeProjects (i, userProjects) {
   for (let k = 0 ; k < this.users[i].projects.length - 1 ; k++) {
     if (this.projects[k].id !== userProjects[k].id) {
       let j = 0;
-// benesba lih kolhom egaux
       console.log('this.projects[k]', this.projects[k].id);
       console.log('userProjectsk', userProjects[k]);
 this.allprojects[j] = this.projects[k];
@@ -161,38 +209,7 @@ console.log('role', role);
 console.log('project NAME', projectName);
 this.changeMode(j);
   }
-  openSuccessCancelSwal2(i, j) {
-    console.log('firstname', this.users[i].firstname);
-    console.log('project name', this.users[i].projects[j]);
-    swal({
-      title: 'Are you sure you want to remove ' + this.users[i].firstname + ' from ' + this.users[i].projects[j].name + ' project ?',
-      text: 'You not be able to revert this!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!',
-      cancelButtonText: 'No, cancel!',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger mr-sm'
-    }).then((result) => {
-      if (result.value) {
-        console.log(this.users[i].projects[j].id, this.users[i].email);
-        this.userService.deleteUserFromProject(this.users[i].projects[j].id, this.users[i].email);
-        swal(
-          'Removed!',
-          'Your user has been removed.',
-          'success'
-        );
-      } else if (result.dismiss) {
-        swal(
-          'Cancelled',
-          '',
-          'error'
-        );
-      }
-    });
-  }
+
   getProjectById(id) {
     const found = this.projects.find(function(element) {
       return element.id === id;
@@ -202,16 +219,22 @@ this.changeMode(j);
   showList() {
   this.isclicked = ! this.isclicked;
 }
-affectProject(i) {
-  // add project to user
-  console.log('project_id', this.selectedOption);
+removeProject (i, j) {
+  this.userService.deleteUserFromProject(this.users[i].projects[j].id, this.users[i].email);
+  this.users[i].projects.splice(j, 1);
+
+}
+affectProject(i, form: NgForm) {
   this.isclicked = ! this.isclicked;
 const adedProject = this.getProjectById( this.selectedOption);
 this.users[i].projects.push(adedProject);
-console.log(this.users[i].projects.length);
 this.editMode[this.users[i].projects.length] = false;
+// this.projectService.addUserToProject(this.selectedOption, this.users[i].email);
+this.userService.affectProject( this.users[i].email, form.value['select']);
 }
-compareFn(c1: Project, c2: Project): boolean {
-  return c1 && c2 ? c1.id === c2.id : c1 === c2;
+profile(email) {
+  const profileUrl = `/profile/${email}`;
+  this.userService.profilEmail = email ;
+  this.router.navigate([profileUrl]);
 }
 }

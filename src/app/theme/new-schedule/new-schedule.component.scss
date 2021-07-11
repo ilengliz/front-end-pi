@@ -1,0 +1,28 @@
+.tag-wrapper {
+  background: red!important;
+}
+table {
+  border: 1px solid black;
+}
+table td {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: silver;
+  border: 1px solid #fff;
+}
+table th {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: gray;
+  border: 1px solid black;
+cursor: default;
+
+}
+
+table td.highlighted {
+  background-color: green;
+}

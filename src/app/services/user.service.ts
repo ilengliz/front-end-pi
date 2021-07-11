@@ -13,13 +13,18 @@ export class UserService {
   private deleteUserUrl = 'http://localhost/pfe/public/api/deleteuser';
   private confirmationEditUrl = 'http://localhost/pfe/public/api/verifpass';
   private removeUserFromProjectUrl = 'http://localhost/pfe/public/api/delete_user_from_project';
+  private addprojectUrl = 'http://localhost/pfe/public/api/add_user_to_project';
   userEmail = '';
   myUserRole: string;
   collaborator = 'collaborator';
   teamLeader = 'teamLeader';
+  profilEmail = ' ';
   verifPass: boolean;
   refereshedData: User [];
-  constructor(private http: HttpClient) { }
+  isUserAdmin: boolean;
+  constructor(private http: HttpClient) {
+
+   }
 getUsers() {
 return this.http.get<User []>(this.getUsersUrl);
   }
@@ -28,6 +33,14 @@ getUserInformation() {
   return this.http.post<User>(this.userInformationUrl, {
     'email': localStorage.getItem('email')
   } );
+}
+
+setAdmin(admin) {
+  this.isUserAdmin = admin;
+}
+
+isAdmin()  {
+  return this.isUserAdmin;
 }
 editUserPassword(oldPassword: any, newPassword: any) {
   this.http.post(this.userEditPasswordUrl, {
@@ -76,30 +89,12 @@ editUser(firstname, lastname, email, phoneNum, jobpost, profilPic, gender) {
 
 }
 deleteUser(email) {
-  console.log(email);
-    this.http.post(this.deleteUserUrl, {
+   return  this.http.post(this.deleteUserUrl, {
     'email': email
-    }).subscribe ( data  => {
-    this.getUsers().subscribe( users => {
-        this.refereshedData = users;
-        console.log(this.refereshedData);
-      }
-
-    );
-    console.log(data);
-    console.log('delete user Request is successful ', data);
-    },
-
-    error  => {
-
-    console.log('Rrror', error);
-
-    }
-
-    );
+    });
 
 
-}
+  }
 
 editConfirmation(password) {
  return  this.http.post(this.confirmationEditUrl, {
@@ -117,11 +112,16 @@ console.log(data);
 }, error => console.error('error', error)
 );
   }
-  getRole() {
-this.getUserInformation().subscribe(data => {
-console.log(data.roles[0]);
-this.myUserRole = data.roles[0];
-});
-return this.myUserRole;
+  affectProject(email, id) {
+    console.log('id', id);
+    this.http.post(this.addprojectUrl, {
+'email': email,
+'project_id': id
+    }).subscribe(data => console.log(data), error => console.log(error));
   }
+  getProfile(email) {
+    return this.http.post<User>(this.userInformationUrl, {
+      'email': email
+    } );  }
+
 }

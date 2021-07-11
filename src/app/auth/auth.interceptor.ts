@@ -21,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
       succ => { },
       err => {
         // tslint:disable-next-line:no-debugger
-        debugger;
         if (err.status === 401) {
           this.router.navigate(['/auth/login/simple']);
         }

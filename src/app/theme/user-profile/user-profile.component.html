@@ -1,0 +1,149 @@
+<div class="page-body">
+  <!--profile cover start-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="cover-profile">
+        <div class="profile-bg-img">
+          <img
+            class="profile-bg-img img-fluid"
+                style="height:120px"
+
+            src="assets/images/user-profile/bg-img1.jpg"
+            alt="bg-img"
+          />
+          <div class="card-block user-info">
+            <div class="col-md-12">
+              <div class="media-left">
+                <a href="javascript:" class="profile-image">
+                  <img
+                    class="user-img img-radius"
+                    src={{src}}
+                    style="width:100px;height:100px"
+                    alt="user-img"
+                  />
+                </a>
+              </div>
+              <div class="media-body row">
+                <div class="col-lg-12">
+                  <div class="user-title">
+                    <h2>{{firstname}} {{lastname}}</h2>
+                    <span class="text-white">{{jobpost}}</span>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--profile cover end-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-tabs md-card-tabs">
+        <ngb-tabset>
+          <ngb-tab title="Personal Info">
+            <ng-template ngbTabContent>
+              <div [@fadeInOutTranslate] class="m-t-15">
+                <!-- personal card start -->
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-header-text">About Me</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="view-info" *ngIf="editProfile">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="general-info">
+                            <div class="row">
+                              <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                  <table class="table m-0">
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">First Name</th>
+                                        <td>{{ firstname }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Last Name</th>
+                                        <td>{{ lastname }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Email</th>
+                                        <td>
+                                          <a href="javascript:;">{{ email }}</a>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">Mobile Number</th>
+                                          <td>{{ phoneNum }}</td>
+                                        </tr>
+                                      <tr>
+                                        <th scope="row">Password</th>
+                                        <td>*******</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                              <div class="col-lg-12 col-xl-6">
+                                <div class="table-responsive">
+                                  <table class="table">
+                                    <tbody>
+
+                                      <tr>
+                                        <th scope="row">Job Post</th>
+                                        <td>{{ jobpost }}</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Projects</th>
+                                        <td>
+                                          <ul class="list-group-flush">
+                                            <li
+                                              *ngFor="let project of projects"
+                                              class="list-group-item"
+                                            >
+                                              {{ project.name }}
+                                            </li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Qr Information</th>
+                                       <td> <img style="height: 100px;width:100px"
+                                        src="{{qrcode}}"
+                                        >
+                                      </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                            </div>
+                            <!-- end of row -->
+                          </div>
+                          <!-- end of general info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                      <!-- end of row -->
+                    </div>
+
+                  </div>
+                  <!-- end of card-body -->
+                </div>
+
+                <!-- personal card end-->
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+

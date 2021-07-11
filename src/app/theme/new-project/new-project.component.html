@@ -1,0 +1,115 @@
+
+
+<app-card>
+
+
+  <div class="edit-info">
+    <form #addProject="ngForm">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="general-info">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td style="font-size: 1.5 !important;">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                            ngModel
+                            required
+                              name="projectName"
+                              class="form-control"
+                              placeholder="Project Name"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            type="number"
+                            id="text-input"
+                            name="extraBudget"
+                            class="form-control"
+                            placeholder="Extra  Budget"
+                            ngModel
+                          />
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- end of table col-md-6 -->
+              <div class="col-md-6">
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              ngModel
+                              required
+                              name="projectBudget"
+                              class="form-control"
+                              placeholder="Project Budget"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+
+                          <select
+                          placeholder = 'Team leader'
+                          name="teamleader"
+                          required
+                          class="browser-default custom-select"
+                          [(ngModel)]="teamleader"
+                        >
+                        <option value="" disabled selected>Select Team leader</option>
+
+                          <option
+                            *ngFor="let user of users"
+                            [(ngValue)]="user.email"
+                            >{{ user.email }}</option
+                          >
+                        </select>
+
+
+
+
+
+                      <!--<tag-input  ngModel required name='teamleader' [ngClass]="'tag-select'" theme='bootstrap' [placeholder] = "'+'" [maxItems]="1" [addOnBlur]="true" [clearOnBlur]="true">
+                            <tag-input-dropdown [autocompleteItems]="autocompleteItems"></tag-input-dropdown>
+                          </tag-input>-->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- end of table col-lg-6 -->
+            </div>
+            <!-- end of row -->
+          </div>
+          <!-- end of edit info -->
+        </div>
+        <!-- end of col-lg-12 -->
+      </div>
+    </form>
+
+    <!-- end of row -->
+  </div>
+  <div class="text-center">
+    <button (click)="onAddProject(addProject)" class=" btn btn-primary waves-effect light-effect">
+      <i class="icofont icofont-plus"></i>Add Project </button>
+    <br />
+  </div>
+</app-card>

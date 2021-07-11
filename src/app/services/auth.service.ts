@@ -1,19 +1,28 @@
+import { Instance } from './../instance';
 import { JwtResponse } from './../auth/jwt-response';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthLoginInfo } from '../auth/login-info';
-import { Observable } from 'rxjs';
-import { User } from '../user';
+import { Observable, Subject } from 'rxjs';
+// import { User } from '../user';
+ declare var gapi: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  instances: Array<Instance> = [];
+  terminated: Array<boolean> = [];
+  test: any;
+
 
 private loginUrl = 'http://localhost/pfe/public/api/login_check';
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) {
+
+
+
+}
 signIn(credentials: AuthLoginInfo): Observable<JwtResponse> {
-  console.log(credentials);
   const headers = new HttpHeaders({'No-Auth': 'True'});
     headers.append('Content-Type', 'application/json');
 
@@ -21,17 +30,4 @@ signIn(credentials: AuthLoginInfo): Observable<JwtResponse> {
 }
 
 
-  /*
-  signIn(email, password) {
-    const signinUrl = '';
-    this.http.post<any>(signinUrl, {
-      'email': email,
-      'password': password
-    }).subscribe(response => this.isAuth = response);
-  }
-  signOut() {
-    const signoutUrl = '';
-    this.http.get(signoutUrl);
-    this.isAuth = false;
-  }*/
 }

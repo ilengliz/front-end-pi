@@ -33,8 +33,13 @@ resetToken: any;
 
 
   onRecoverpass(form: NgForm) {
-this.forgotService.changePassword(this.validatingForm.get('password').value, this.resetToken);
-console.log('pass', this.validatingForm.get('password'));
+    console.log('password is: ', this.validatingForm.get('password').value);
+this.forgotService.changePassword(this.validatingForm.get('password').value, this.resetToken).subscribe(data => {
+  console.log(data);
+  this.router.navigate(['auth/login/simple']);
+}, err => {
+  console.log(err);
+});
 
   }
 }

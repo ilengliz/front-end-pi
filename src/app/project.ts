@@ -7,5 +7,5 @@ export interface Project {
   remainingBudget: number;
 extraBudget: number;
 TeamLeader: User;
-users: User [];
+Users: User [];
 }

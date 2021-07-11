@@ -1,0 +1,311 @@
+
+
+<app-card #simulate [classHeader]="true">
+    <button
+    (click)="onredirectTo()"
+    class="float-right  btn btn-primary waves-effect light-effect"
+  >
+  <i class="icofont icofont-plus"></i>Add Instance
+  </button>
+  <br />
+  <table
+    id="khaledmagiquesysteme"
+    class="table table-striped table-bordered table-md table-responsive"
+    cellspacing="0"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th><strong>Name</strong></th>
+        <th><strong>State</strong></th>
+        <th><strong>Schedules</strong></th>
+        <th><strong>Project</strong></th>
+        <th><strong>Location</strong></th>
+        <th><strong>Internal IP</strong></th>
+        <th><strong>External IP</strong></th>
+        <th><strong>Actions</strong></th>
+      </tr>
+    </thead>
+    <tbody
+      style="margin-left: 500px"
+      class=" text-center "
+      *ngIf="instances.length == 0"
+    >
+      <div
+        class="loader animation-start"
+        style="text-align: center; margin-left: 610px"
+      >
+        <span class="circle delay-1 size-2"></span>
+        <span class="circle delay-2 size-4"></span>
+        <span class="circle delay-3 size-6"></span>
+        <span class="circle delay-4 size-7"></span>
+        <span class="circle delay-5 size-7"></span>
+        <span class="circle delay-6 size-6"></span>
+        <span class="circle delay-7 size-4"></span>
+        <span class="circle delay-8 size-2"></span>
+      </div>
+    </tbody>
+    <tbody *ngIf="instances.length != 0">
+      <tr *ngFor="let instance of instances; let i = index">
+        <td>
+          <a
+            (click)="modalDefault.show(instance)"
+            placement="right"
+            ngbTooltip="Click for details"
+          >
+            {{ instance.name }}
+          </a>
+          <app-modal-basic #modalDefault [dialogClass]="'modal-md'">
+            <div class="app-modal-header">
+              <h4 class="modal-title"># Details</h4>
+              <button
+                type="button"
+                class="close basic-close"
+                (click)="modalDefault.hide()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class=" app-modal-body text-center">
+              <table
+
+                class="table table-striped text-left"
+              >
+                <tr>
+                  <td>Name :</td>
+                  <td>{{ instance.name }}</td>
+                </tr>
+                <tr>
+                  <td>Created By :</td>
+                  <td>                      <a (click) = 'profile(instance.CreatedBy.email)'>
+                      {{ instance.CreatedBy.email }}</a></td>
+                </tr>
+                <tr>
+                  <td>Disk Size :</td>
+                  <td>{{ instance.disksize }}</td>
+                </tr>
+                <tr>
+                  <td>Disk Type :</td>
+                  <td>{{ instance.disktype }}</td>
+                </tr>
+                <tr style = "width:160px !important;">
+                  <td>Image :</td>
+                  <td >{{ instance.image }}</td>
+                </tr>
+                <tr>
+                  <td>Machine type :</td>
+                  <td>{{ instance.type }}</td>
+                </tr>
+                <tr>
+                  <td>Price :</td>
+                  <td>{{ instance.price }} $</td>
+                </tr>
+              <!--
+              <tr>
+                    <td>Last Start :</td>
+                    <td>{{ instance.LastActive }} </td>
+                  </tr>-->
+                        </table>
+            </div>
+            <div class="app-modal-footer">
+              <button
+                type="button"
+                class="btn btn-default waves-effect"
+                (click)="modalDefault.hide()"
+              >
+                Close
+              </button>
+            </div>
+          </app-modal-basic>
+        </td>
+
+        <td>
+          <ui-switch
+            class="js-switch"
+            (change)="updateStatus(i)"
+            [(ngModel)]="terminated[i]"
+            color="#90ee90"
+            switchColor="#fff"
+            size="large"
+            checked
+          ></ui-switch>
+        </td>
+        <td>
+          <ng-template #popContent1 class="row"
+            ><form #scheduleForm="ngForm">
+
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button
+                    *ngIf='!noSchedule[i]'
+                    disabled
+                    type="button"
+                    style="width:170px;"
+                    class="float-left btn  btn-light  btn-md"
+                  >
+                    <strong>{{ instance.schedule.name }}</strong>
+                  </button>
+                  <button
+                  *ngIf='noSchedule[i]'
+                  disabled
+                  type="button"
+                  style="width:170px;"
+                  class="float-left btn  btn-light  btn-md"
+                >
+                  <strong>No schedule for this VM</strong>
+                </button>
+                  <button
+                  (click)="p1.close()"
+                  *ngIf='!noSchedule[i]'
+                  (click)="removeSchedule(i)"
+                  type="button"
+                  style="width:1px !important;height: 46px;width: 30px ! important;"
+                  class="btn btn-light btn-sm"
+                >
+                  <i
+                    style="
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);"
+                    class="float-right fa fas fa-times-circle fa-lg"
+                  ></i>
+                </button>                  </div>
+
+                <br />
+                <br>
+              <select
+                *ngIf="editMode[i]"
+                name="actualschedule"
+                required
+                class="browser-default custom-select"
+                [(ngModel)]="mySchedule"
+              >
+                <option
+                  *ngFor="let schedule of schedules"
+                  [(ngValue)]="schedule.name"
+                  >{{ schedule.name }}</option
+                >
+              </select>
+
+              <br />
+              <a>
+                <i
+                  *ngIf="!editMode[i] "
+                  class="float-right fa fa-edit fa-lg"
+                  (click)="changeMode(i)"
+                ></i></a
+              ><br />
+              <a>
+                <i
+                  *ngIf="editMode[i] "
+                  class="float-right fa fa-plus fa-lg"
+                  (click)="p1.close()"
+                  (click)="affecteSchedule(scheduleForm, i)"
+                ></i></a
+              ><br />
+            </form>
+          </ng-template>
+          <button
+            (click)="checkSchedule(i)"
+            type="button"
+            #p1="ngbPopover"
+            class="btn  btn-light  btn-md"
+            placement="top"
+            data-container="body"
+            [ngbPopover]="popContent1"
+          >
+            <i class="fa fa-calendar fa-lg"></i>
+          </button>
+        </td>
+
+        <td>
+          <ng-template #popContent2 class="row">
+            <div class="alert alert-primary icons-alert">
+              <button type="button" class="close" appRemoveAlert></button>
+              <div class="row ">
+                <p>
+                  <a  [routerLink]="['/projects']" routerLinkActive="router-link-active" ><strong>{{ instances[i].project.name }}</strong></a>
+                </p>
+              </div>
+            </div>
+            <form #updateProject = "ngForm">
+            <select
+            *ngIf='editModeProject[i]'
+              name="actualProject"
+              required
+              class="browser-default custom-select"
+              [(ngModel)]="selectedProject"
+            >
+              <option
+                *ngFor="let project of projects"
+                [(ngValue)]="project.name"
+                >{{ project.name }}</option
+              >
+            </select>
+          </form>
+            <a>
+                <i
+                  *ngIf="!editModeProject[i] && isAdmin
+                  "
+                  class="float-right fa fa-edit fa-lg"
+                  (click)="changeModeProject(i)"
+                ></i></a
+              ><br />
+              <a>
+                <i
+                  *ngIf="editModeProject[i]   && isAdmin"
+                  class="float-right fa fa-plus fa-lg"
+                  (click)="p2.close()"
+                  (click)= "affectProject(i, updateProject)"
+                ></i></a
+              ><br />
+          </ng-template>
+
+          <button
+            type="button"
+            #p2="ngbPopover"
+            class="btn btn-md btn-light-green waves-effect "
+            placement="top"
+            data-container="body"
+            [ngbPopover]="popContent2"
+            popoverClass="resize"
+          >
+            <i class="fa fa-eye fa-lg"></i>
+          </button>
+        </td>
+        <td>{{ instance.zone }}</td>
+        <td>{{ instance.internalIP }}</td>
+        <td>{{ instance.externalIP }}</td>
+        <td align="center">
+          <button
+            (click)="openSuccessCancelSwal(i)"
+            class="btn btn-md btn-danger btn-danger"
+          >
+            <i class="fa fa-trash fa-lg"></i>
+          </button>
+          <button
+            [disabled]="!toConnect[i]"
+            (click)="onConnect(instance)"
+            class="btn btn-md btn-primary btn-primary"
+          >
+            <i class="fa fas fa-wifi fa-lg"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th style="width:30%;"><strong>Name</strong></th>
+        <th style="width:10%;"><strong>State</strong></th>
+        <th style="width:7%;"><strong>Schedules</strong></th>
+        <th><strong>Project</strong></th>
+        <th style="width:15%;"><strong>Location</strong></th>
+        <th><strong>Internal IP</strong></th>
+        <th><strong>External IP</strong></th>
+        <th><strong>Actions</strong></th>
+      </tr>
+    </tfoot>
+  </table>
+  <ng2-toasty></ng2-toasty>
+</app-card>

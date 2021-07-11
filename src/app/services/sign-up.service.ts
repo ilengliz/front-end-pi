@@ -11,27 +11,23 @@ export class SignUpService {
 
 
 
-  signUp(firstname, lastname, email, cin, jobPost, mobileNumber, profilePicture, gender, password) {
+  signUp(firstname, lastname, email, cin, jobPost, mobileNumber, profilePicture, gender) {
     const urlAddUser = 'http://localhost/pfe/public/register';
-    console.log(profilePicture);
     const myUser = {
 
-email: email,
-firstname: firstname,
-lastname: lastname,
-       password: password,
+      email: email,
+      firstname: firstname,
+      lastname: lastname,
        profilPic: profilePicture,
        cin: cin,
        phone_num: mobileNumber,
        jobPost: jobPost,
        sex: gender
     };
-    console.log(profilePicture);
     const reqHeader = new HttpHeaders({'No-Auth': 'True'});
-    this.http.post<User>(urlAddUser, myUser, {
+   return this.http.post<User>(urlAddUser, myUser, {
       headers: reqHeader
-    } ).subscribe(data => console.log(data));
-    this.router.navigate(['/auth/login/simple']);
+    } );
   }
 
 }

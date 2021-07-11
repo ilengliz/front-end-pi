@@ -5,7 +5,7 @@ import {FormSelectRoutingModule} from './form-select-routing.module';
 import {SharedModule} from '../../../shared/shared.module';
 import {FormsModule} from '@angular/forms';
 import {SelectModule} from 'ng-select';
-import {TagInputModule} from 'ngx-chips';
+// import {TagInputModule} from 'ngx-chips';
 import {SelectOptionService} from '../../../shared/elements/select-option.service';
 import {JsonpModule} from '@angular/http';
 
@@ -16,7 +16,7 @@ import {JsonpModule} from '@angular/http';
     SharedModule,
     FormsModule,
     SelectModule,
-    TagInputModule,
+   // TagInputModule,
     JsonpModule
   ],
   declarations: [FormSelectComponent],

@@ -1,0 +1,505 @@
+
+
+<app-card [title]="''">
+  <div *ngIf="!errorMessage" class="alert alert-danger icons-alert">
+    <button type="button" class="close" appRemoveAlert>
+      <i class="icofont icofont-close-line-circled"></i>
+    </button>
+    <p><strong>Already Existing VM instance !</strong></p>
+    <p>Please try again !</p>
+  </div>
+  <div *ngIf="other" class="alert alert-danger icons-alert">
+    <button type="button" class="close" appRemoveAlert>
+      <i class="icofont icofont-close-line-circled"></i>
+    </button>
+    <p><strong>Something went wrong !</strong></p>
+    <p>Please try again !</p>
+  </div>
+  <div #alert class="edit-info">
+    <form #addInstance="ngForm">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="general-info">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label>Name</label>
+
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              ngModel
+                              required
+                              name="name"
+                              class="form-control"
+                              placeholder="Name"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Project</label><br />
+                          <select
+                            name="project"
+                            required
+                            class=" custom-select"
+                            ngModel
+                          >
+                            <option
+                              *ngFor="let project of myProjects"
+                              [ngValue]="project.name"
+                              >{{ project.name }}</option
+                            >
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Region</label><br />
+                          <select
+                            (change)="updateZone()"
+                            required
+                            class="browser-default custom-select"
+                            name="region"
+                            [(ngModel)]="region"
+                          >
+                            <option selected value="1"
+                              >asia-east1 (Taiwan)</option
+                            >
+                            <option value="2">asia-east2(Hong Kong)</option>
+                            <option value="3">asia-northest1 (Tokyo)</option>
+                            <option value="4">asia-south1 (Mumbai)</option>
+                            <option value="5"
+                              >asia-southeast1 (Singapour)</option
+                            >
+                            <option value="6"
+                              >australia-southeast1 (Sydney)</option
+                            >
+                            <option value="7">europe-north1 (Finlande)</option>
+                            <option value="8">europe-west1 (Belgique)</option>
+                            <option value="9">europe-west2 (Londres)</option>
+                            <option value="10">europe-west3 (Francfort)</option>
+                            <option value="11">europe-west4 (Pays-Bas)</option>
+                            <option value="12">europe-west6 (Zurich)</option>
+                            <option value="13"
+                              >northamerica-northeast1 (Montréal)</option
+                            >
+                            <option value="14"
+                              >southamerica-east1 (Sao Paulo)</option
+                            >
+                            <option value="15">us-central1 (lowa)</option>
+                            <option value="16"
+                              >us-east1 (Caroline du Sud)</option
+                            >
+                            <option value="17"
+                              >us-east4 (Virgine du Nord)</option
+                            >
+                            <option value="18">us-west1 (Oregon)</option>
+                            <option value="18">us-west2 (Los Angeles)</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Zone</label><br />
+                          <select
+                            required
+                            name="zone"
+                            class="browser-default custom-select"
+                            ngModel
+                          >
+                            <option
+                              *ngFor="let zone of zones"
+                              [ngValue]="zone"
+                              >{{ zone }}</option
+                            >
+                          </select>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- end of table col-md-6 -->
+              <div class="col-lg-6">
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label>Image</label><br />
+                          <select
+                            [(ngModel)]="defaultImage"
+                            required
+                            name="image"
+                            class="browser-default custom-select"
+                          >
+                            <option
+                              value="debian-cloud debian-9-stretch-v20190326"
+                              selected
+                              >Debian GNU/Linux 9 (stretch)
+                            </option>
+                            <option value="centos-cloud centos-6-v20190326"
+                              >CentOS 6
+                            </option>
+                            <option value="centos-cloud centos-7-v20190326"
+                              >CentOS 7
+                            </option>
+                            <option
+                              value="coreos-cloud coreos-alpha-2107-0-0-v20190409"
+                              >CoreOS alpha 2107.0.0
+                            </option>
+                            <option
+                              value="coreos-cloud coreos-beta-2079-1-0-v20190326"
+                              >CoreOS beta 2079.1.0
+                            </option>
+                            <option
+                              value="coreos-cloud coreos-stable-2023-5-0-v20190312"
+                              >CoreOS stable 2023.5.0
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-1404-trusty-v20190410"
+                              >Ubuntu 14.04 LTS
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-1604-xenial-v20190411"
+                              >Ubuntu 16.04 LTS
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-1804-bionic-v20190404"
+                              >Ubuntu 18.04 LTS
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-1810-cosmic-v20190402"
+                              >Ubuntu 18.10
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-minimal-1604-xenial-v20190408"
+                              >Ubuntu 16.04 LTS Minimal
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-minimal-1804-bionic-v20190403"
+                              >Ubunutu 18.04 LTS Minimal
+                            </option>
+                            <option
+                              value="ubuntu-os-cloud ubuntu-minimal-1810-cosmic-v20190402"
+                              >Ubunutu 18.10 LTS Minimal
+                            </option>
+
+                            <option value="cos-cloud cos-69-10895-211-0"
+                              >Container-Optimized OS 69-10895.211.0 stable
+                            </option>
+                            <option value="cos-cloud cos-73-11647-121-0"
+                              >Container-Optimized OS 73-11647.121.0 stable
+                            </option>
+                            <option value="cos-cloud cos-beta-74-11895-56-0"
+                              >Container-Optimized OS 74-11895.56.0 beta
+                            </option>
+                            <option value="cos-cloud cos-dev-75-12062-0-0"
+                              >Container-Optimized OS 75-12062.0.0 dev
+                            </option>
+                            <option value="cos-cloud cos-stable-73-11647-121-0"
+                              >Container-Optimized OS 73-11647.121.0 stable
+                            </option>
+                            <option value="cos-cloud sles-12-sp4-v20190221"
+                              >Container-Optimized OS 75-12062.0.0 dev
+                            </option>
+                            <option value="rhel-cloud rhel-6-v20190326"
+                              >Red Hat Enterprise Linux 6
+                            </option>
+                            <option
+                              value="rhel-sap-cloud rhel-7-4-sap-v20190326"
+                              >Red Hat Enterprise Linux 7
+                            </option>
+                            <option
+                              value="rhel-sap-cloud rhel-7-6-sap-v20190326"
+                              >Red Hat Enterprise Linux for SAP with Update
+                              Services 7.4
+                            </option>
+                            <option
+                              value="rhel-sap-cloud rhel-7-sap-apps-v20181210"
+                              >Red Hat Enterprise Linux for SAP with High
+                              Availability and Update Services 7.6
+                            </option>
+                            <option
+                              value="rhel-sap-cloud rhel-7-sap-hana-v20181210"
+                              >Red Hat Enterprise Linux for SAP Applications 7
+                            </option>
+
+                            <option value="rhel-sap-cloud sles-15-v20190221"
+                              >Red Hat Enterprise Linux for SAP HANA 7</option
+                            >
+                            <option value="suse-cloud sles-12-sp1-sap-v20190221"
+                              >SUSE Linux Enterprise Server 12 SP4
+                              x86_64</option
+                            >
+                            <option value="suse-cloud sles-12-sp2-sap-v20190221"
+                              >SUSE Linux Enterprise Server 15 x86_64</option
+                            >
+                            <option
+                              value="suse-sap-cloud sles-12-sp3-sap-v20190221"
+                              >SUSE Linux Enterprise Server 12 SP1 For SAP
+                              x86_64</option
+                            >
+                            <option
+                              value="suse-sap-cloud sles-12-sp4-sap-v20190221"
+                              >SUSE Linux Enterprise Server 12 SP2 For SAP
+                              x86_64</option
+                            >
+                            <option value="suse-sap-cloud sles-15-sap-v20190221"
+                              >SUSE Linux Enterprise Server 12 SP3 For SAP
+                              x86_64</option
+                            >
+                            <option
+                              value="suse-sap-cloud sles-12-sp4-sap-v20190221"
+                              >SUSE Linux Enterprise Server 12 SP4 For SAP
+                              x86_64</option
+                            >
+                            <option value="suse-sap-cloud sles-15-sap-v20190221"
+                              >SUSE Linux Enterprise Server 15 For SAP
+                              x86_64</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1709-dc-core-for-containers-v20190312"
+                              >Windows Server version 1709 Datacenter Core for
+                              Containers</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1709-dc-core-v20190312"
+                              >Windows Server version 1709 Datacenter
+                              Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1803-dc-core-for-containers-v20190312"
+                              >Windows Server version 1803 Datacenter Core for
+                              Containers</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1803-dc-core-v20190312"
+                              >Windows Server version 1803 Datacenter
+                              Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1809-dc-core-for-containers-v20190312"
+                              >Windows Server version 1809 Datacenter Core for
+                              Containers</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-1809-dc-core-v20190312"
+                              >Windows Server version 1809 Datacenter
+                              Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2008-r2-dc-v20190312"
+                              >Windows Server 2008 R2 Datacenter</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2012-r2-dc-core-v20190312"
+                              >Windows Server 2012 R2 Datacenter Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2012-r2-dc-v20190312"
+                              >Windows Server 2012 R2 Datacenter</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2016-dc-core-v20190312"
+                              >Windows Server 2016 Datacenter Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2016-dc-v20190312"
+                              >Windows Server 2016 Datacenter</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2019-dc-core-for-containers-v20190312"
+                              >Windows Server 2019 Datacenter Core for
+                              Containers</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2019-dc-core-v20190312"
+                              >Windows Server 2019 Datacenter Core</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2019-dc-for-containers-v20190312"
+                              >Windows Server 2019 Datacenter for
+                              Containers</option
+                            >
+                            <option
+                              value="windows-cloud windows-server-2019-dc-v20190312"
+                              >Windows Server 2019 Datacenter</option
+                            >
+                            <option
+                              value="ml-images c0-deeplearning-common-cu100-20190312"
+                              >Intel® optimized Deep Learning Image: Base m22
+                              (with Intel® MKL and CUDA 10.0)</option
+                            >
+                            <option
+                              value="ml-images c1-deeplearning-pytorch-1-0-cu100-20190314"
+                              >Deep Learning Image: PyTorch 1.0.0 and fastai m23
+                              CUDA 10.0</option
+                            >
+                            <option
+                              value="ml-images c2-deeplearning-tf-1-13-cu100-20190314"
+                              >Intel® optimized Deep Learning Image: TensorFlow
+                              1.13.1 m23 (with Intel® MKL-DNN/MKL and CUDA
+                              10.0)</option
+                            >
+                            <option value="ml-images debian-9-tf-1-10-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-10</option
+                            >
+                            <option value="ml-images debian-9-tf-1-11-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-11</option
+                            >
+                            <option value="ml-images debian-9-tf-1-12-v20190409"
+                              >Debian GNU/Linux 9 Stretch + TF 1-12</option
+                            >
+                            <option value="ml-images debian-9-tf-1-13-v20190412"
+                              >Debian GNU/Linux 9 Stretch + TF 1-13</option
+                            >
+                            <option value="ml-images debian-9-tf-1-6-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-6</option
+                            >
+                            <option value="ml-images debian-9-tf-1-7-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-7</option
+                            >
+                            <option value="ml-images debian-9-tf-1-8-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-8</option
+                            >
+                            <option value="ml-images debian-9-tf-1-9-v20190408"
+                              >Debian GNU/Linux 9 Stretch + TF 1-9</option
+                            >
+
+                            <option
+                              value="ml-images debian-9-tf-nightly-v20190409"
+                              >Debian GNU/Linux 9 Stretch + TF nightly</option
+                            >
+                          </select>
+                        </td>
+                      </tr>
+                      <br />
+                      <tr>
+                        <td>
+                          <label>Machine Type</label><br />
+                          <select
+                            [(ngModel)]="defaultMachineType"
+                            name="machineType"
+                            class="browser-default custom-select"
+                          >
+                            <option value="f1-micro"
+                              >micro (1 vCPU shared)
+                              <small>0,6 Go, f1-micro</small>
+                            </option>
+                            <option value="g1-small"
+                              >small (1 vCPU shared)
+                              <small>1,7 Go, g1-small</small>
+                            </option>
+                            <option value="n1-standard-1"
+                              >1 vCPU
+                              <small style="color:gray"
+                                >3,75 Go, n1-standard-1</small
+                              >
+                            </option>
+                            <option selected value="n1-standard-2"
+                              >2 vCPU
+                              <small>7,5 Go, n1-standard-2</small>
+                            </option>
+                            <option value="n1-standard-4"
+                              >4 vCPU
+                              <small>15 Go, n1-standard-4</small>
+                            </option>
+                            <option value="n1-standard-8"
+                              >8 vCPU
+                              <small>30 Go, n1-standard-8</small>
+                            </option>
+                            <option value="n1-highmem-2"
+                              >2 vCPU
+                              <small>13 Go, n1-highmem-2</small>
+                            </option>
+                            <option value="n1-highmem-4"
+                              >4 vCPU
+                              <small>26 Go, n1-highmem-4</small>
+                            </option>
+                            <option value="n1-highmem-8"
+                              >8 vCPU
+                              <small>52 Go, n1-highmem-8</small>
+                            </option>
+                            <option value="n1-highcpu-2"
+                              >2 vCPU
+                              <small>1,8 Go, n1-highcpu-2</small>
+                            </option>
+                            <option value="n1-highcpu"
+                              >4 vCPU
+                              <small>3,6 Go, n1-highcpu-4</small>
+                            </option>
+                            <option value="n1-highcpu-8"
+                              >8 vCPU
+                              <small>7,2 Go, n1-highcpu-8</small>
+                            </option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Disk Size</label><br />
+                          <input
+                            type="number"
+                            [(ngModel)]="defaultSize"
+                            required
+                            name="diskSize"
+                            class="form-control"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Disk Type</label><br />
+                          <select
+                            (change)="updateZone()"
+                            class="browser-default custom-select"
+                            name="diskType"
+                            [(ngModel)]="diskType"
+                          >
+                            <option value="pd-ssd" selected
+                              >SSD persistant disk</option
+                            >
+                            <option selected value="pd-standard"
+                              >Persistant standard disk</option
+                            >
+                          </select>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- end of table col-lg-6 -->
+            </div>
+            <!-- end of row -->
+          </div>
+          <!-- end of edit info -->
+        </div>
+        <!-- end of col-lg-12 -->
+      </div>
+    </form>
+
+    <!-- end of row -->
+  </div>
+  <div class="text-center">
+    <button
+      [disabled]="addInstance.invalid"
+      (click)="onAddInstance(addInstance)"
+      class=" btn btn-primary waves-effect light-effect"
+    >
+      <i class="icofont icofont-plus"></i>Create VM Instance
+    </button>
+    <br />
+  </div>
+
+  <ng2-toasty></ng2-toasty>
+</app-card>
